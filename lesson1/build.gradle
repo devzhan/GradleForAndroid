@@ -1,5 +1,102 @@
 task Hello{
         doLast{
             println 'hello world!'
+            logger.error('test for logger')
         }
+}
+
+task wrapper_new(type: Wrapper){
+        gradleVersion = '2.4'
+}
+//字符串相关
+task printStringClass{
+    doLast{
+        def string1 = 'abc'
+        def string2 = "dd"
+        println '单引号：'+string1.getClass().name
+        println '双引号：'+string2.getClass().name
+        println "字符串是：${string2}"
+
+    }
+}
+
+// list 相关
+task printListClass{
+    doLast{
+        def nums = [1,2,3,4,5]
+        println "nums 的类型是 ${nums.getClass().name}"
+    }
+}
+
+// map 相关
+task printMapClass{
+    doLast{
+        def user=['name':'tom','age': 24]
+        println "user 的类型是 ${user.getClass().name}"
+        println user['name']
+        user.each{
+            println "Key is: ${it.key} and Value is :${it.value}"
+        }
+        user.each(){
+            println it.key
+        }
+        user.each({
+            println it.key
+        })
+    }
+}
+//方法相关
+def add(int a,int b){
+    return a+b
+}
+task methodAdd{
+    doLast{
+        println "2+3 的结果是:${add(2,3)}"
+    }
+}
+
+class Person{
+    private String name ;
+}
+task javaBean{
+    doLast{
+        Person person = new Person()
+        println "name is :${person.name}"
+        person.name = "Jay"
+        println "name is :${person.name}"
+    }
+}
+
+//闭包
+def customEach(closure){
+
+    for(int i in 0..10){
+        closure(i)
+    }
+}
+task helloClosure{
+        doLast{
+            customEach{
+                println it
+            }
+        }
+}
+
+task closure1{
+    doLast{
+        innerClosuregt
+    }
+}
+def innerClosure = {
+    printf("stringPrint")
+ }
+
+
+def stringPrint= {
+    String x -> println "x is ${x}"
+}
+
+
+task  h1   {
+   println 'hello1'
 }
