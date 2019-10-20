@@ -1,0 +1,36 @@
+apply plugin: "java"
+ext.age = 18
+ext {
+    phone =123456789
+    address = 'shenzhen'
+}
+sourceSets.all{
+    ext.resourcesDir= null
+}
+sourceSets{
+     main {
+       resourcesDir= "main/res" 
+    }
+     test {
+       resourcesDir= "test/res" 
+    }
+}
+
+
+
+task Hello{
+        doLast{
+            println 'hello world!'
+            logger.error('test for logger')
+            println "age is: ${age}"
+            println "phone is: ${phone}"
+            println "address is: ${address}"
+            sourceSets.each{
+                println "${it.name} 的resourcesDir是${it.resourcesDir} "
+            }
+        }
+}
+def Task ex41CustomTask = task(ex41CustomTask)
+ex41CustomTask.doLast{
+    println 'create custom task success'
+}

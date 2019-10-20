@@ -1,0 +1,63 @@
+task customTask1{
+    doFirst{
+        println 'this is doFirst'
+    }
+    doLast{
+        println 'this is doLast'
+    }
+}
+tasks.create("customTask2"){
+    doFirst{
+        println 'this is doFirst'
+    }
+    doLast{
+        println 'this is doLast'
+    }
+}
+
+task ex35Hello{
+    doLast{
+        println 'ex35Hello'
+    }
+}
+task ex35Main(dependsOn: ex35Hello){
+    doLast{
+        println 'ex35Main'
+    }
+}
+task ex35World {
+    doLast{
+         println 'ex35World'
+    }
+}
+
+task  mulitTask{
+        dependsOn ex35Hello,ex35World
+        doLast{
+            println 'mulitTask'
+        }
+}
+
+task ex36Hello{
+    doLast{
+        println 'ex36Hello doLast 1'
+    }
+}
+ex36Hello.doFirst{
+    println 'ex36Hello doFirst'
+}
+ex36Hello.doLast{
+    println project.hasProperty('mulitTask')
+    println 'ex36Hello doLast 2'
+}
+ext {
+    phone = '123456789'
+    age = '24'
+}
+task ex37CustomProperty{
+    doLast{
+        println "phone is ${phone}"
+        println "age is ${age}"
+
+    }
+}
