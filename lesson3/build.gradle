@@ -30,7 +30,134 @@ task Hello{
             }
         }
 }
-def Task ex41CustomTask = task(ex41CustomTask)
-ex41CustomTask.doLast{
-    println 'create custom task success'
+tasks.create("CustomTask"){
+    description "create task"
+    doLast{
+        println " ${description}"
+    }
 }
+task ex42CustomTask
+ex42CustomTask.doLast{
+    println "ex42CustomTask"
+}
+
+class CustomTask1 extends DefaultTask{
+    @TaskAction
+    def doSelf(){
+        println 'do self'
+    }
+}
+def Task myTask =  task ex43CustomTask(type:CustomTask1)
+myTask.doLast{
+    println 'do last'
+}
+myTask.doFirst{
+    println 'do first'
+}
+
+task exOrder1{
+    doLast{
+        println 'exOrder1'
+    }
+}
+task exOrder2{
+    doLast{
+        println 'exOrder2'
+    }
+}
+// exOrder2.mustRunAfer exOrder1
+
+// ifOnly 断言使用
+
+final String   BUILD_APPS_ALL = "all"
+final String   BUILD_APPS_SHOUFA = "shoufa"
+final String   BUILD_APPS_EXCLUDE_SHOUFA= "exclude_shoufa"
+
+task ex48QQRelease{
+    doLast{
+        println '打应用宝的包'
+    }
+}
+task ex48BaiduRelease{
+    doLast{
+        println '打百度的包'
+    }
+}
+task ex48HuaweiRelease{
+    doLast{
+        println '打华为的包'
+    }
+}
+task ex48MiuiRelease{
+    doLast{
+        println '打Miui的包'
+    }
+}
+task buildApp{
+    group BasePlugin.BUILD_GROUP
+    description "打包渠道"
+}
+buildApp.dependsOn ex48QQRelease,ex48BaiduRelease,ex48HuaweiRelease,ex48MiuiRelease
+
+ex48QQRelease.onlyIf{
+    def execute = false
+    if(project.hasProperty("build_apps")){
+        Object buildApps = project.property("build_apps")
+        if(BUILD_APPS_SHOUFA.equals(buildApps)||BUILD_APPS_ALL.equals(buildApps)){
+            execute = true
+        }else{
+            execute = false
+        }
+    }else{
+        execute = true
+    }
+    execute
+}
+
+
+ex48BaiduRelease.onlyIf{
+    def execute = false
+    if(project.hasProperty("build_apps")){
+        Object buildApps = project.property("build_apps")
+        if(BUILD_APPS_SHOUFA.equals(buildApps)||BUILD_APPS_ALL.equals(buildApps)){
+            execute = true
+        }else{
+            execute = false
+        }
+    }else{
+        execute = true
+    }
+    execute
+}
+
+ex48HuaweiRelease.onlyIf{
+    def execute = false
+    if(project.hasProperty("build_apps")){
+        Object buildApps = project.property("build_apps")
+        if(BUILD_APPS_EXCLUDE_SHOUFA.equals(buildApps)||BUILD_APPS_ALL.equals(buildApps)){
+            execute = true
+        }else{
+            execute = false
+        }
+    }else{
+        execute = true
+    }
+    execute
+}
+
+ex48MiuiRelease.onlyIf{
+    def execute = false
+    if(project.hasProperty("build_apps")){
+        Object buildApps = project.property("build_apps")
+        if(BUILD_APPS_EXCLUDE_SHOUFA.equals(buildApps)||BUILD_APPS_ALL.equals(buildApps)){
+            execute = true
+        }else{
+            execute = false
+        }
+    }else{
+        execute = true
+    }
+    execute
+}
+
+//执行命令 gradle -Pbuild_apps=shoufa : buildApps
