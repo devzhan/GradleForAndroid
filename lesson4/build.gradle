@@ -1,0 +1,49 @@
+apply from:'version.gradle'
+task ex41PrintVersion{
+    doLast{
+        println "版本名称是：${versionName} ,版本号是:${versionCode}"
+    }
+}
+apply plugin: Ex41CustomPlugin
+class Ex41CustomPlugin implements Plugin<Project>{
+    void apply(Project project){
+         project.tasks.create("Pusher", PusherTask).doLast{
+            println "自定义插件doLast"
+        }.doFirst{
+            println "自定义插件doFirst"
+        }
+       
+      
+    }
+} 
+
+class PusherTask extends DefaultTask {
+    @TaskAction
+    def doSelf(){
+        println '自定义插件 doSelf'
+    }
+   
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+task publishJar(type: Jar)
+group 'com.zone.demo.ex4'
+version '1.0.0'
+artifacts{
+    archives publishJar
+}
+uploadArchives{
+    repositories{
+        flatDir{
+            name "libs"
+            dirs "$projectDir/libs"
+        }
+        mavenCentral()
+
+         mavenDeployer {
+            repository(url: uri('C:\\Users\\xiuwen.zhan\\.m2\\repository')) //定义本地maven仓库的地址
+         }
+    }
+}
