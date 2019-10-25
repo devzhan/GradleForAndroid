@@ -16,6 +16,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    android.applicationVariants.all { variant ->
+        if (variant.buildType.name.equals('release')) {
+            variant.outputs.all { output ->
+                def buildName = "Downloader"
+                def type = variant.buildType.name
+                def releaseApkName = buildName + '_' + type + "_" + versionName +  '.apk'
+                outputFileName = releaseApkName
+                versionNameOverride = "2223"
+            }
+        }
+    }
+}
+
+def buildDate(){
+    def date = new Date();
+    return date.format("YYYYmmdd")
 }
 
 dependencies {
