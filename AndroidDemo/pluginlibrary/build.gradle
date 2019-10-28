@@ -10,6 +10,8 @@ repositories {
     mavenCentral()
 }
 
+group='com.zone.plugin'
+version='1.0.0'
 
 uploadArchives {
     repositories {
@@ -17,10 +19,8 @@ uploadArchives {
             // 本地仓库路径
 
 
-            repository(url:"file:/D:/plu")
-            pom.groupId = "com.hello.gradle.plugin"
-            pom.artifactId = "helloplugin"
-            pom.version = "1.0.0"
+//            repository(url:"file:/D:/plu")
+            repository(url: uri('../repo'))
         }
     }
 }

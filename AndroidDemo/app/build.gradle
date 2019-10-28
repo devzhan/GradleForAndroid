@@ -1,5 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'pluginTest'
+buildscript {
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+    dependencies {
+        classpath 'com.zone.plugin:pluginlibrary:1.0.0'
+    }
+}
 
+println('配置阶段开始')
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -27,6 +39,12 @@ android {
             }
         }
     }
+    task testAndroid{
+        println("122222222222222222222222222222")
+
+        doFirst{
+        }
+    }
 }
 
 def buildDate(){
@@ -42,3 +60,36 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+gradle.taskGraph.beforeTask { task {
+    doLast {
+        println '动态添加的Action'
+    }
+}
+
+}
+
+task Test {
+    doLast {
+        println '原始Action'
+    }
+}
+
+
+// 创建一个Task
+task testConfig() {
+    println 'Task中的配置代码'
+    // 定义一个闭包
+    def a = {
+        println 'Task中的配置代码2'
+        println("666666666666666666666666666")
+
+    }
+    // 执行闭包
+    a()
+    doFirst {
+        println '这段代码配置阶段不执行'
+
+    }
+}
+
+println '我是顺序执行的'

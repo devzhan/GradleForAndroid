@@ -1,2 +1,34 @@
 include ':app', ':pluginlibrary'
+include ':subproject'
 rootProject.name='GradleDemo'
+gradle.addBuildListener(new BuildListener() {
+    @Override
+    void buildStarted(Gradle gradle) {
+        println('buildStarted')
+
+    }
+
+    @Override
+    void settingsEvaluated(Settings settings) {
+        println('settingsEvaluated')
+
+    }
+
+    @Override
+    void projectsLoaded(Gradle gradle) {
+        println('projectsLoaded')
+
+    }
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {
+        println('projectsEvaluated')
+
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        println('buildFinished1')
+
+    }
+})

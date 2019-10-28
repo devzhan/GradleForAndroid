@@ -1,0 +1,35 @@
+task grandpa {
+    doFirst {
+        println 'task grandpa：doFirst 先于 doLast 执行'
+    }
+    doLast {
+        println 'task grandpa：doLast'
+    }
+}
+
+task father(dependsOn: grandpa) {
+    doLast {
+        println 'task father：doLast'
+    }
+}
+
+task mother  {
+    doLast{
+        println 'task mother 先于 task father 执行'
+
+    }
+}
+
+task child(dependsOn: [father, mother]){
+    doLast {
+        println 'task child 最后执行'
+    }
+}
+
+task nobody {
+    doLast {
+        println '我不执行'
+    }
+}
+// 指定任务father必须在任务mother之后执行
+father.mustRunAfter mother
