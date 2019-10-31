@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'pluginTest'
+//apply plugin: 'transformPlugin'
 buildscript {
     repositories {
         maven {
@@ -8,6 +9,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.zone.plugin:pluginlibrary:1.0.0'
+//        classpath 'com.zone.transfrom:transformlibrary:1.0.0'
+
     }
 }
 
