@@ -1,0 +1,33 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+dependencies {
+    implementation gradleApi() //gradle sdk
+    implementation localGroovy() //groovy sdk
+
+    implementation 'com.android.tools.build:gradle:3.1.3'
+    implementation group: 'org.javassist', name: 'javassist', version: '3.22.0-GA'
+
+}
+repositories {
+    jcenter()
+
+}
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+        //本地仓库路径，以放到项目根目录下的 repo 的文件夹为例
+        repository(url: uri('../repo'))
+
+        //groupId ，自行定义
+        pom.groupId = 'com.zone.transform'
+        //artifactId
+        pom.artifactId = 'clazzplugin'
+        //插件版本号
+        pom.version = '1.0.0'
+    }
+}
+
+
+
+
