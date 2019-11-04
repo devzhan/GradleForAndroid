@@ -1,4 +1,4 @@
-include ':app', ':pluginlibrary'
+include ':app', ':pluginlibrary', ':transformlibrary'
 include ':subproject'
 rootProject.name='GradleDemo'
 gradle.addBuildListener(new BuildListener() {
